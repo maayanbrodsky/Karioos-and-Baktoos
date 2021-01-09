@@ -1,2 +1,2 @@
 # Karioos-and-Baktoos
-An exercise in algorithms and complexity
+A very basic exercise in algorithms and complexity
