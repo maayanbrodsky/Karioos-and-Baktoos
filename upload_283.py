@@ -1,21 +1,23 @@
 from math import inf
 from random import randint
+from typing import List
 
 
 TEST_BOARD = [[-34, 59, 50],
-[83, -97, 39],
-[-89, -98, -85]]  # optimal score for p2 is -216
+              [83, -97, 39],
+              [-89, -98, -85]]  # optimal score for p2 is -216
+
+NUM_RANGE = 100
 
 
-def generate_board(n):
-    return [[randint(-100, 100) for _i in range(n)] for _j in range(n)]
-
-def print_board(board):
-    print(*board, sep='\n')
-    print('\n')
+def generate_board(n: int, num_range: int) -> List[List[int]]:
+    """Takes board size and number range (positive and negative), returns the board."""
+    return [[randint(-num_range, num_range) for _i in range(n)] for _j in range(n)]
 
 
-def check_for_negatives(row):
+def check_for_negatives(row: List[int]) -> int:
+    """Main algorithm. Takes board line, checks for the largest negative integer
+    and returns it if no negatives exist, returns largest positive."""
     optimal = -inf
     negatives = 0
     for num in row:
@@ -28,7 +30,9 @@ def check_for_negatives(row):
         return optimal
 
 
-def max_points(board):
+def max_points(board: List[List[int]]) -> int:
+    """Takes the board, sums the points assuming P2 maximizes points
+    in response to P1 trying to minimize points."""
     points = 0
     for row in board:
         points += check_for_negatives(row)
@@ -37,6 +41,6 @@ def max_points(board):
     return points
 
 
-board = generate_board(4)
-print_board(board)
-print(max_points(board))
+board = generate_board(4, 100)
+print(*board, sep='\n')
+print(f'\nMax points for P2: {max_points(board)}')
